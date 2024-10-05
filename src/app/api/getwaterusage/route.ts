@@ -7,6 +7,20 @@ const getArea = (geometry: LatLng[]) => {
   console.log(area);
 };
 
+const getCenter = (geometry: LatLng[]) => {
+  let sumLat = 0;
+  let sumLong = 0;
+
+  for (const latLng of geometry) {
+    sumLat += latLng.Latitude;
+    sumLong += latLng.Longitude;
+  }
+
+
+
+  return { Latitude: sumLat / geometry.length, Longitude: sumLong / geometry.length };
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
@@ -15,11 +29,17 @@ export async function GET(request) {
   const enddate : string = searchParams.get('enddate');
   const interval : string = searchParams.get('interval');
 
-  const geometryET = geometry.split(',');
+  const geometryET = JSON.parse(geometry);
   const latLngArray: LatLng[] = geometryET.map(([lat, lng]) => ({
     Latitude: lat,
     Longitude: lng
   }));
+
+  
+  // console.log(center);
+  const center: LatLng = getCenter(latLngArray);
+  console.log(getPrecipitation(center));
+  // wrapper(center);
 
   // console.log(latLngArray);
   // getArea(latLngArray);

@@ -6,8 +6,10 @@ const addDaysToDate = (date: Date, days: number): Date => {
     return newDate;
 }
 
-export const getPrecipitation = async (coord: LatLng): Promise<number[]>  => {
-
+const wrapper = async (coord: LatLng): Promise<number[]>  => {
+    console.log("COORD");
+    console.log(coord);
+    
         // // Define current date and the next 7 days
         const today = new Date();
         const endDate = addDaysToDate(today, 7); // Adds 7 days to today's date
@@ -40,5 +42,10 @@ export const getPrecipitation = async (coord: LatLng): Promise<number[]>  => {
 
         return daily_precipitation
 } 
+
+export const getPrecipitation = async (coord: LatLng) => {
+    const value = await wrapper(coord);
+    return value;
+}
 
 // console.log(getPrecipitation({ Latitude: 37.7749, Longitude: -122.4194}));
