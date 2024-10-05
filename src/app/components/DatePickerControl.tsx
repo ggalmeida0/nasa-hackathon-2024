@@ -3,26 +3,24 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendar } from '@fortawesome/free-solid-svg-icons'
 import DatePicker from 'react-datepicker'
+import { DateRange } from './Map'
 
 export type DatePickerControlProps = {
-  onDateSelection: (updatedDate: [Date | null, Date | null]) => void;
+  onDateSelection: (updatedDate: DateRange) => void;
+  dateSelection: DateRange
 }
 
-export default function DatePickerControl({ onDateSelection }) {
+export default function DatePickerControl({ onDateSelection, dateSelection }: DatePickerControlProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
-  const [startDate, endDate] = dateRange
+  const [startDate, endDate] = dateSelection
 
   const toggleDatePicker = () => {
     setIsOpen(!isOpen)
   }
 
-   const handleDateChange = (update: [Date | null, Date | null]) => {
-    console.log(update)
-    setDateRange(update)
-    if (update[0] && update[1]) {
-      setIsOpen(false) // Close the picker when a range is selected
-    }
+   const handleDateChange = (update: DateRange) => {
+    onDateSelection(update)
+    setIsOpen(false)
   }
 
   return (

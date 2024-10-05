@@ -17,6 +17,7 @@
     "@types/react-leaflet": "^2.8.3",
     "leaflet": "^1.9.4",
     "leaflet-draw": "^1.0.4",
+    "lodash": "^4.17.21",
     "next": "14.2.14",
     "react": "^18",
     "react-datepicker": "^7.4.0",
@@ -25,6 +26,7 @@
     "react-leaflet-draw": "^0.20.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
