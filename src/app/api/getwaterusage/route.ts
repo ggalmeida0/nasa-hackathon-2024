@@ -32,9 +32,7 @@ export async function GET(request) {
   });
   const data = await response.json();
 
-  console.log(data);
-
-  return new Response(JSON.stringify({ message: 'Hello, world!' }), {
+  return new Response(JSON.stringify({ et_data: data }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
