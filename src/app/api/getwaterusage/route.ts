@@ -11,8 +11,6 @@ const getCenter = (geometry: LatLng[]) => {
   let sumLat = 0;
   let sumLong = 0;
 
-
-
   for (const latLng of geometry) {
     sumLat += latLng.Latitude;
     sumLong += latLng.Longitude;
