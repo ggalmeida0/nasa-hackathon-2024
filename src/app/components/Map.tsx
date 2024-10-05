@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet'
 import { EditControl } from "react-leaflet-draw"
+import DatePickerControl from './DatePickerControl'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import L from 'leaflet'
@@ -35,15 +36,16 @@ const Map = () => {
           position='topright'
           onCreated={handleCreated}
           draw={{
-            rectangle: true,
-            polygon: true,
-            circle: true,
+            rectangle: false,
+            polygon:false,
+            circle: false,
             circlemarker: false,
-            marker: true,
+            marker: false,
             polyline: true,
           }}
         />
       </FeatureGroup>
+      <DatePickerControl />
     </MapContainer>
   )
 }
