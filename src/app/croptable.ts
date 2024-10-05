@@ -4,6 +4,12 @@ export type CropKc = {
     kcEnd: number;
 };
 
+const GrowthStage = {
+    'Seedling': 1,
+    'Adult': 2,
+    'Elderly': 3
+}
+
 export const CropType = {
     alfalfa: 'alfalfa',
     onions: 'onions',
@@ -41,6 +47,7 @@ export const CropType = {
     watermelon: 'watermelon',
     lettuce: 'lettuce',
 };
+
 
 export const cropData: { [crop: string]: CropKc } = {
     alfalfa: { kcIni: 0.4, kcMid: 1.2, kcEnd: 1.15 },

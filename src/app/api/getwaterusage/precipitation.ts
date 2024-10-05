@@ -47,5 +47,3 @@ export const getPrecipitation = async (coord: LatLng) => {
     const value = await wrapper(coord);
     return value;
 }
-
-// console.log(getPrecipitation({ Latitude: 37.7749, Longitude: -122.4194}));
