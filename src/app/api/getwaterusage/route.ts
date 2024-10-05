@@ -22,14 +22,12 @@ const getCenter = (geometry: LatLng[]) => {
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
-  // [-0.042057, 51.530212][-0.015106, 51.512268] [-0.078793, 51.512909] [-0.069008, 51.53726]
-
   const geometry : string = searchParams.get('geometry');
   const startdate : string = searchParams.get('startdate');
   const enddate : string = searchParams.get('enddate');
   const interval : string = searchParams.get('interval');
 
-  const geometryET = JSON.parse(geometry);
+  const geometryET = geometry.split(',');
   const latLngArray: LatLng[] = geometryET.map(([lat, lng]) => ({
     Latitude: lat,
     Longitude: lng

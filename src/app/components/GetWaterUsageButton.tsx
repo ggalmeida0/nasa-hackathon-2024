@@ -22,14 +22,14 @@ export default function WaterUsageControl({ onFetchWaterUsage }: WaterUsageContr
   }
 
   return (
-    <div className='leaflet-bottom leaflet-left'>
-      <div className="leaflet-control leaflet-bar">
+    <div className='leaflet-control-waterusage-container'>
+      <div className="leaflet-bar">
         <a 
           href="#" 
           role="button" 
           title="Get Water Usage"
           onClick={handleClick}
-          className={`leaflet-control-water-usage ${isLoading ? 'loading' : ''}`}
+          className={`leaflet-control-waterusage ${isLoading ? 'loading' : ''}`}
         >
           <FontAwesomeIcon icon={faTint} spin={isLoading} />
         </a>
