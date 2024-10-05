@@ -33,6 +33,13 @@ body {
   z-index: 999; /* Set this to a value lower than the draw control */
 }
 
+.leaflet-control-intervalpicker-container {
+  position: absolute;
+  right: 90px;
+  top: 10px; /* Adjust this value to position it below the draw control */
+  z-index: 999; /* Set this to a value lower than the draw control */
+}
+
 .leaflet-control-datepicker {
   width: 30px;
   height: 30px;

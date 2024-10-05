@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet'
 import { EditControl } from "react-leaflet-draw"
 import DatePickerControl from './DatePickerControl'
 import GetWaterUsageButton from './GetWaterUsageButton'
+import IntervalPickerControl from './IntervalPickerControl'  
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import L from 'leaflet'
@@ -48,6 +49,7 @@ const Map = () => {
       </FeatureGroup>
       {/* <GetWaterUsageButton onFetchWaterUsage={}/> */}
       <DatePickerControl onDateSelection={() => {}}/>
+      <IntervalPickerControl />
     </MapContainer>
   )
 }
