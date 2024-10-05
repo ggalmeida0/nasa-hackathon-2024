@@ -7,6 +7,18 @@ const getArea = (geometry: LatLng[]) => {
   console.log(area);
 };
 
+const getCenter = (geometry: LatLng[]) => {
+  let sumLat = 0;
+  let sumLong = 0;
+
+  for (latLng of geometry) {
+    sumLat += latLng.Latitude;
+    sumLong += latLng.Longitude;
+  }
+
+  return [sumLat / geometry.length, sumLong / geometry.length];
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
@@ -24,7 +36,8 @@ export async function GET(request) {
   }));
 
   console.log(latLngArray);
-  getArea(latLngArray);
+  console.log(getCenter(geometryET))
+  // getArea(latLngArray);
 
 
   // const response = await fetch('https://openet-api.org/raster/timeseries/polygon', {
