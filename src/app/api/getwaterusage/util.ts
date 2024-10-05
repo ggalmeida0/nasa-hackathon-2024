@@ -23,6 +23,7 @@ export class SphericalUtil {
         for (const point of path) {
             const tanLat = Math.tan((Math.PI / 2 - this.toRadians(point.Latitude)) / 2);
             const lng = this.toRadians(point.Longitude);
+
             total += this.polarTriangleArea(tanLat, lng, prevTanLat, prevLng);
             prevTanLat = tanLat;
             prevLng = lng;
