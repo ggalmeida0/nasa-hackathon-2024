@@ -25,3 +25,38 @@ body {
     text-wrap: balance;
   }
 }
+
+.leaflet-control-datepicker-container {
+  position: absolute;
+  right: 50px;
+  top: 10px; /* Adjust this value to position it below the draw control */
+  z-index: 999; /* Set this to a value lower than the draw control */
+}
+
+.leaflet-control-datepicker {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.leaflet-control-datepicker:hover {
+  background-color: #f4f4f4;
+}
+
+.date-picker-popup {
+  position: absolute;
+  left: 40px; /* Position the popup to the right of the button */
+  top: 0;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}

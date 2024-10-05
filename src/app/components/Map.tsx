@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet'
 import { EditControl } from "react-leaflet-draw"
 import DatePickerControl from './DatePickerControl'
+import GetWaterUsageButton from './GetWaterUsageButton'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import L from 'leaflet'
@@ -45,7 +46,8 @@ const Map = () => {
           }}
         />
       </FeatureGroup>
-      <DatePickerControl />
+      {/* <GetWaterUsageButton onFetchWaterUsage={}/> */}
+      <DatePickerControl onDateSelection={() => {}}/>
     </MapContainer>
   )
 }
