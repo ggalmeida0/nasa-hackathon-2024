@@ -97,3 +97,6 @@ body {
   opacity: 0.7;
 }
 
+.interval-dropdown {
+  color: rgb(0, 0, 0); /* Change this to any color you want */
+}
