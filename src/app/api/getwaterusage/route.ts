@@ -1,6 +1,6 @@
 // app/api/hello/route.js
 import { SphericalUtil, LatLng } from "./util"
-
+import { getPrecipitation } from "./precipitation";
 
 const getArea = (geometry: LatLng[]) => {
   const area = SphericalUtil.computeSignedArea(geometry);
@@ -21,9 +21,8 @@ export async function GET(request) {
     Longitude: lng
   }));
 
-  console.log(latLngArray);
-  getArea(latLngArray);
-
+  // console.log(latLngArray);
+  // getArea(latLngArray);
 
   // const response = await fetch('https://openet-api.org/raster/timeseries/polygon', {
   //   method: 'POST',
