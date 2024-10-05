@@ -1,7 +1,7 @@
 export type CropKc = {
-    kcIni: 'Seedling';
-    kcMid: 'Adult';
-    kcEnd: 'Elder';
+    kcIni: number,
+    kcMid: number,
+    kcEnd: number;
 };
 
 export type CropType = {
