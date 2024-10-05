@@ -33,7 +33,7 @@ export default function IntervalPickerControl() {
         </a>
         {isOpen && (
           <div className="interval-picker-popup">
-            <select value={interval} onChange={handleIntervalChange}>
+            <select value={interval} onChange={handleIntervalChange} className="interval-dropdown">
               <option value="daily">Daily</option>
               <option value="monthly">Monthly</option>
             </select>
