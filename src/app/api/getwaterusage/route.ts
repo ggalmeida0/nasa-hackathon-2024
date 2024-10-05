@@ -37,9 +37,5 @@ export async function GET(request) {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
-  // return new Response(JSON.stringify({ et_data: "hello" }), {
-  //   status: 200,
-  //   headers: { 'Content-Type': 'application/json' },
-  // });
 }
 
