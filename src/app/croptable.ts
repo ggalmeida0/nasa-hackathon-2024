@@ -4,7 +4,7 @@ export type CropKc = {
     kcEnd: number;
 };
 
-export type CropType = {
+export const CropType = {
     alfalfa: 'alfalfa',
     onions: 'onions',
     apples: 'apples',
