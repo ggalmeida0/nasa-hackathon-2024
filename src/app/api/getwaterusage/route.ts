@@ -16,8 +16,6 @@ const getCenter = (geometry: LatLng[]) => {
     sumLong += latLng.Longitude;
   }
 
-
-
   return { Latitude: sumLat / geometry.length, Longitude: sumLong / geometry.length };
 }
 
@@ -35,11 +33,8 @@ export async function GET(request) {
     Longitude: lng
   }));
 
-  
-  // console.log(center);
   const center: LatLng = getCenter(latLngArray);
   console.log(getPrecipitation(center));
-  // wrapper(center);
 
   // console.log(latLngArray);
   // getArea(latLngArray);
