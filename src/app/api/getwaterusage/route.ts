@@ -11,7 +11,9 @@ const getCenter = (geometry: LatLng[]) => {
   let sumLat = 0;
   let sumLong = 0;
 
-  for (latLng of geometry) {
+
+
+  for (const latLng of geometry) {
     sumLat += latLng.Latitude;
     sumLong += latLng.Longitude;
   }
@@ -27,14 +29,14 @@ export async function GET(request) {
   const enddate : string = searchParams.get('enddate');
   const interval : string = searchParams.get('interval');
 
-  const geometryET = geometry.split(',');
+  const geometryET = JSON.parse(geometry);
   const latLngArray: LatLng[] = geometryET.map(([lat, lng]) => ({
     Latitude: lat,
     Longitude: lng
   }));
 
   console.log(latLngArray);
-  console.log(getCenter(geometryET))
+  console.log(getCenter(latLngArray));
   // getArea(latLngArray);
 
 
