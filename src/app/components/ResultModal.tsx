@@ -46,7 +46,8 @@ export default function ResultModal({ result, loading }: { result?: WaterUsage; 
 
   function litersToGallons(liters: number) {
     const conversionFactor = 0.264172; // 1 liter = 0.264172 gallons
-    return liters * conversionFactor;
+    const gallons = liters * conversionFactor;
+    return gallons.toFixed(2); // Round to 2 decimal places
   }
 
   return (
