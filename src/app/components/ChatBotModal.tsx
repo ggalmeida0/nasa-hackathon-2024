@@ -35,7 +35,7 @@ export default function ChatBotModal({ irrigationType, cropType, growthStage, wa
                     <ModalContent>
                         {(onClose: () => void) => (
                             <>
-                                <ModalHeader className="select-black-font">Sprout AI</ModalHeader>
+                                <ModalHeader className="select-black-font">Sprout AI <PiPlant color="green" className="ml-3"/></ModalHeader>
                                 <ModalBody>
                                     <Chat irrigationType={irrigationType} cropType={cropType} growthStage={growthStage} waterFlow={waterFlow} />
                                 </ModalBody>
