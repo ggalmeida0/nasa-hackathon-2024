@@ -78,7 +78,7 @@ const Map = () => {
           onCreated={handleCreated}
           draw={{
             rectangle: false,
-            polygon: true,
+            polygon: false,
             circle: false,
             circlemarker: false,
             marker: false,

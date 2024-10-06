@@ -93,6 +93,7 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                     if (map) {
                       const drawControl = new L.Draw.Polygon(map as DrawMap);
                       drawControl.enable();
+                      onClose()
                     }
                   }}
                 >
