@@ -3,7 +3,6 @@ import 'leaflet/dist/leaflet.css';
 import { EditControl } from 'react-leaflet-draw';
 
 function MapComponent() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onCreated = (e: any) => {
     const layer = e.layer;
     const { _latlngs } = layer;

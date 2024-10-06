@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import { ChatBotModalProps } from "./ChatBotModal";
-import React, { useState, useEffect, useRef } from "react";
-import styles from "./chat.module.css";
-import { AssistantStream } from "openai/lib/AssistantStream";
-import Markdown from "react-markdown";
+import React, { useState, useEffect, useRef } from 'react';
+import styles from './chat.module.css';
+import { AssistantStream } from 'openai/lib/AssistantStream';
+import Markdown from 'react-markdown';
 // @ts-expect-error - no types for this yet
-import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistants";
-import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
+import { AssistantStreamEvent } from 'openai/resources/beta/assistants/assistants';
+import { ChatBotModalProps } from './ChatBotModal';
 
 type MessageProps = {
-  role: "user" | "assistant" | "code";
+  role: 'user' | 'assistant' | 'code';
   text: string;
 };
 
@@ -29,7 +28,7 @@ const AssistantMessage = ({ text }: { text: string }) => {
 const CodeMessage = ({ text }: { text: string }) => {
   return (
     <div className={styles.codeMessage}>
-      {text.split("\n").map((line, index) => (
+      {text.split('\n').map((line, index) => (
         <div key={index}>
           <span>{`${index + 1}. `}</span>
           {line}
@@ -41,27 +40,27 @@ const CodeMessage = ({ text }: { text: string }) => {
 
 const Message = ({ role, text }: MessageProps) => {
   switch (role) {
-    case "user":
+    case 'user':
       return <UserMessage text={text} />;
-    case "assistant":
+    case 'assistant':
       return <AssistantMessage text={text} />;
-    case "code":
+    case 'code':
       return <CodeMessage text={text} />;
     default:
       return null;
   }
 };
 
-const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
-  const [userInput, setUserInput] = useState("");
+const Chat = ({ irrigationType, cropType, growthStage, waterFlow }: ChatBotModalProps) => {
+  const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
-  const [threadId, setThreadId] = useState("");
+  const [threadId, setThreadId] = useState('');
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
   useEffect(() => {
     scrollToBottom();
@@ -71,7 +70,7 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
   useEffect(() => {
     const createThread = async () => {
       const res = await fetch(`/api/sproutAI/threads`, {
-        method: "POST",
+        method: 'POST',
       });
       const data = await res.json();
       setThreadId(data.threadId);
@@ -79,54 +78,46 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
     createThread();
   }, []);
 
-  const sendMessage = async (text) => {
+  const sendMessage = async (text: string) => {
     const prefix = `I have a crop of ${cropType} at growth stage ${growthStage} and an irrigation system ${irrigationType}
     with a flow rate of ${waterFlow} gallons per minute.`;
 
-    console.log("PROPSS", prefix);
+    console.log('PROPSS', prefix);
 
-    const response = await fetch(
-      `/api/sproutAI/threads/${threadId}/messages`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          content: prefix + text,
-        }),
-      }
-    );
+    const response = await fetch(`/api/sproutAI/threads/${threadId}/messages`, {
+      method: 'POST',
+      body: JSON.stringify({
+        content: prefix + text,
+      }),
+    });
 
-    console.log("GOT STATUS", response.status)
-    const stream = AssistantStream.fromReadableStream(response.body);
+    console.log('GOT STATUS', response.status);
+    const stream = AssistantStream.fromReadableStream(response.body as ReadableStream<unknown>);
     handleReadableStream(stream);
   };
 
-  const submitActionResult = async (runId, toolCallOutputs) => {
-    const response = await fetch(
-      `/api/sproutAI/threads/${threadId}/actions`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          runId: runId,
-          toolCallOutputs: toolCallOutputs,
-        }),
-      }
-    );
-    const stream = AssistantStream.fromReadableStream(response.body);
+  const submitActionResult = async (runId: string, toolCallOutputs: unknown) => {
+    const response = await fetch(`/api/sproutAI/threads/${threadId}/actions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        runId: runId,
+        toolCallOutputs: toolCallOutputs,
+      }),
+    });
+    const stream = AssistantStream.fromReadableStream(response.body as ReadableStream<unknown>);
     handleReadableStream(stream);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: Event) => {
     e.preventDefault();
     if (!userInput.trim()) return;
     sendMessage(userInput);
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { role: "user", text: userInput },
-    ]);
-    setUserInput("");
+    // @ts-ignore
+    setMessages((prevMessages) => [...prevMessages, { role: 'user', text: userInput }]);
+    setUserInput('');
     setInputDisabled(true);
     scrollToBottom();
   };
@@ -135,14 +126,14 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
 
   // textCreated - create new assistant message
   const handleTextCreated = () => {
-    appendMessage("assistant", "");
+    appendMessage('assistant', '');
   };
 
   // textDelta - append text to last assistant message
-  const handleTextDelta = (delta) => {
+  const handleTextDelta = (delta: any) => {
     if (delta.value != null) {
       appendToLastMessage(delta.value);
-    };
+    }
     if (delta.annotations != null) {
       annotateLastMessage(delta.annotations);
     }
@@ -151,25 +142,23 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
   // imageFileDone - show image in chat
   const handleImageFileDone = (image) => {
     appendToLastMessage(`\n![${image.file_id}](/api/files/${image.file_id})\n`);
-  }
+  };
 
   // toolCallCreated - log new tool call
   const toolCallCreated = (toolCall) => {
-    if (toolCall.type != "code_interpreter") return;
-    appendMessage("code", "");
+    if (toolCall.type != 'code_interpreter') return;
+    appendMessage('code', '');
   };
 
   // toolCallDelta - log delta and snapshot for the tool call
   const toolCallDelta = (delta, snapshot) => {
-    if (delta.type != "code_interpreter") return;
+    if (delta.type != 'code_interpreter') return;
     if (!delta.code_interpreter.input) return;
     appendToLastMessage(delta.code_interpreter.input);
   };
 
   // handleRequiresAction - handle function call
-  const handleRequiresAction = async (
-    event: AssistantStreamEvent.ThreadRunRequiresAction
-  ) => {
+  const handleRequiresAction = async (event: AssistantStreamEvent.ThreadRunRequiresAction) => {
     const runId = event.data.id;
     const toolCalls = event.data.required_action.submit_tool_outputs.tool_calls;
     // loop over tool calls and call function handler
@@ -190,21 +179,20 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
 
   const handleReadableStream = (stream: AssistantStream) => {
     // messages
-    stream.on("textCreated", handleTextCreated);
-    stream.on("textDelta", handleTextDelta);
+    stream.on('textCreated', handleTextCreated);
+    stream.on('textDelta', handleTextDelta);
 
     // image
-    stream.on("imageFileDone", handleImageFileDone);
+    stream.on('imageFileDone', handleImageFileDone);
 
     // code interpreter
-    stream.on("toolCallCreated", toolCallCreated);
-    stream.on("toolCallDelta", toolCallDelta);
+    stream.on('toolCallCreated', toolCallCreated);
+    stream.on('toolCallDelta', toolCallDelta);
 
     // events without helpers yet (e.g. requires_action and run.done)
-    stream.on("event", (event) => {
-      if (event.event === "thread.run.requires_action")
-        handleRequiresAction(event);
-      if (event.event === "thread.run.completed") handleRunCompleted();
+    stream.on('event', (event) => {
+      if (event.event === 'thread.run.requires_action') handleRequiresAction(event);
+      if (event.event === 'thread.run.completed') handleRunCompleted();
     });
   };
 
@@ -242,11 +230,10 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
             `/api/files/${annotation.file_path.file_id}`
           );
         }
-      })
+      });
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
-    
-  }
+  };
 
   return (
     <div className={styles.chatContainer}>
@@ -256,10 +243,7 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className={`${styles.inputForm} ${styles.clearfix}`}
-      >
+      <form onSubmit={handleSubmit} className={`${styles.inputForm} ${styles.clearfix}`}>
         <input
           type="text"
           className={styles.input}
@@ -267,11 +251,7 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Enter your question"
         />
-        <button
-          type="submit"
-          className={styles.button}
-          disabled={inputDisabled}
-        >
+        <button type="submit" className={styles.button} disabled={inputDisabled}>
           Send
         </button>
       </form>

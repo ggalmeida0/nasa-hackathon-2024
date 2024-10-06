@@ -5,7 +5,6 @@ import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import CropSelectionModal from './CropSelectionModal';
 import ChatBotModal from './ChatBotModal';
-import { ChatBotModalProps } from './ChatBotModal';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
@@ -32,7 +31,6 @@ const Map = () => {
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: '/leaflet/marker-icon-2x.png',
@@ -41,7 +39,6 @@ const Map = () => {
     });
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCreated = (e: any) => {
     const { layer } = e;
     const coordinates = layer.toGeoJSON().geometry.coordinates as number[];

@@ -25,7 +25,6 @@ const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[])
   const data = await response.json();
   console.log(data);
   // Convert to an array of et numbers
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const etArray = data.map((entry: { et: any }) => entry.et);
 
   return etArray;
