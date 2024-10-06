@@ -24,7 +24,8 @@ const addDaysToDate = (date: Date, days: number): Date => {
   return newDate;
 }
 
-export async function GET(request) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function GET(request: any) {
   const { searchParams } = new URL(request.url);
 
   const geometry : string = searchParams.get('geometry')!;
