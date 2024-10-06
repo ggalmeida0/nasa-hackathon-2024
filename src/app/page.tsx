@@ -10,9 +10,6 @@ export default function Home() {
   return (
     <main>
       <MapWithNoSSR />
-      <h1>Map Drawing App</h1>
-      {/* <MapWithNoSSR /> */}
-      <Chat />
     </main>
   );
 }

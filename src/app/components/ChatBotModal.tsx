@@ -16,6 +16,7 @@ import { useMap } from 'react-leaflet';
 import L, { DrawMap } from 'leaflet';
 import 'leaflet-draw';
 import Chat from './chatBot';
+import { PiPlant } from "react-icons/pi";
 
 export type ChatBotModalProps = {
     cropType: string, growthStage: string, irrigationType: string, waterFlow: string
@@ -28,7 +29,7 @@ export default function ChatBotModal({ irrigationType, cropType, growthStage, wa
         <>
             <div className='.chatbot-modal'>
                 <Button onPress={onOpen} className="leaflet-sproutai-button">
-                    Sprout AI
+                    Sprout AI <PiPlant color="green"/>
                 </Button>
                 <Modal scrollBehavior={"inside"} isOpen={isOpen} onOpenChange={onOpenChange} classNames={{ wrapper: '.chatbot-modal' }}>
                     <ModalContent>

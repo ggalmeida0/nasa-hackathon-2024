@@ -81,7 +81,7 @@ const Chat = ({irrigationType, cropType, growthStage, waterFlow}) => {
 
   const sendMessage = async (text) => {
     const prefix = `I have a crop of ${cropType} at growth stage ${growthStage} and an irrigation system ${irrigationType}
-    with a flow rate of ${waterFlow}. `;
+    with a flow rate of ${waterFlow} gallons per minute.`;
 
     console.log("PROPSS", prefix);
 

@@ -126,6 +126,13 @@ body {
   z-index: 1; /* Ensure it appears on top */
 }
 
+.leaflet-sproutai-button {
+  position: absolute;
+  bottom: 10px;
+  left: 480px;
+  z-index: 1;
+}
+
 .get-water-usage-button {
   position: absolute;
   bottom: 10px; /* Adjust distance from the bottom */
