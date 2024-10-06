@@ -30,7 +30,7 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
 
   const handleConfirm = (onClose: () => void) => {
     if (!selectedCrop || !selectedGrowthStage || !irrigationType || !waterFlow) {
-      alert('Please select both crop type and growth stage.');
+      alert('Please select all the fields');
       return;
     }
     if (map) {
@@ -95,7 +95,7 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onPress={() => handleConfirm(onClose)}>
-                  Confirm
+                  Draw Crop
                 </Button>
               </ModalFooter>
             </>
