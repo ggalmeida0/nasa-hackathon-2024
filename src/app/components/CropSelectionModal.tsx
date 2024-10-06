@@ -12,28 +12,34 @@ import {
 import { Input } from '@nextui-org/input';
 import { CropType, GrowthStage } from '../croptable';
 import { useState } from 'react';
+import { useMap } from 'react-leaflet';
+import L, { DrawMap } from 'leaflet';
+import 'leaflet-draw';
 
 interface CropSelectionModalProps {
-  onSubmit: (cropType: string, growthStage: string) => void;
+  onSubmit: (cropType: string, growthStage: string, irrigationType: string, waterFlow: string) => void;
 }
 
 export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps)  {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
+  const [irrigationType, setIrrigationType] = useState('')
+  const [waterFlow, setWaterFlow] = useState('')
+  const map = useMap()
 
   const handleConfirm = () => {
     if (!selectedCrop || !selectedGrowthStage) {
       alert('Please select both crop type and growth stage.');
       return;
     }
-    onSubmit(selectedCrop, selectedGrowthStage);
+    onSubmit(selectedCrop, selectedGrowthStage, irrigationType, waterFlow);
   };
 
   return (
     <>
       <Button onPress={onOpen} className="leaflet-croptype-button">
-        Crop Type
+        Set Crop Info
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} classNames={{ wrapper: '.result-modal' }}>
         <ModalContent>
@@ -65,14 +71,22 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                     </SelectItem>
                   ))}
                 </Select>
-                <Select label="Select Irrigation Type" className="select-black-font">
+                <Select label="Select Irrigation Type" className="select-black-font" onChange={(e) => setIrrigationType(e.target.value)}>
                   {['Surface', 'Sprinkler', 'Drip', 'Subsurface'].map((type, index) => (
                     <SelectItem key={index + type} value={type} className="select-black-font">
                       {type}
                     </SelectItem>
                   ))}
                 </Select>
-                <Input type="text" label="Irrigation water flow in gallons / minute" />
+                <Input type="text" label="Irrigation water flow in gallons / minute" onChange={(e) => setWaterFlow(e.target.value)}/>
+                <Button onClick={() => {
+  if (map) {
+    const drawControl = new L.Draw.Polygon(map as DrawMap);
+    drawControl.enable();
+  }
+                }}>
+                  Draw crop
+                </Button>
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onPress={handleConfirm}>

@@ -122,6 +122,13 @@ body {
 .leaflet-set-location-button {
   position: absolute;
   bottom: 10px; /* Adjust distance from the bottom */
-  left: 120px;   /* Adjust distance from the left */
+  left: 150px;   /* Adjust distance from the left */
+  z-index: 1; /* Ensure it appears on top */
+}
+
+.get-water-usage-button {
+  position: absolute;
+  bottom: 10px; /* Adjust distance from the bottom */
+  left: 320px;   /* Adjust distance from the left */
   z-index: 1; /* Ensure it appears on top */
 }

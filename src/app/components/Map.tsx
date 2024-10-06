@@ -8,7 +8,8 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import SetFarmLocationButton from './SetFarmLocationButton';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
+import { Button } from '@nextui-org/react';
 
 export type DateRange = [Date | null, Date | null];
 
@@ -16,6 +17,8 @@ const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
   const [selectedCrop, setSelectedCrop] = useState('')
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('')
+  const [_, setIrrigationType] = useState('')
+  const [waterFlow, setWaterFlow] = useState('')
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
@@ -34,8 +37,8 @@ const Map = () => {
   };
 
   const handleFetchWaterUsage = async () => {
-    if (_.isEmpty(drawingCoordinates) || !selectedCrop || !selectedGrowthStage) {
-      console.log(_.isEmpty(drawingCoordinates));
+    if (isEmpty(drawingCoordinates) || !selectedCrop || !selectedGrowthStage) {
+      console.log(isEmpty(drawingCoordinates));
       alert(
         `Please fill all required fields \nSelected coodinates: ${drawingCoordinates}
         \nSelected CropType:${selectedCrop}\nSelected GrowthStage:${selectedGrowthStage}`,
@@ -45,7 +48,8 @@ const Map = () => {
     const input: Record<string, string> = {
       geometry: JSON.stringify(drawingCoordinates),
       croptype: selectedCrop as string,
-      growthstage: selectedGrowthStage as string
+      growthstage: selectedGrowthStage as string,
+      flowrate: waterFlow
     };
     const result = await (await fetch('/api/getwaterusage?' + new URLSearchParams(input).toString())).json();
     console.log(result);
@@ -73,12 +77,15 @@ const Map = () => {
         />
       </FeatureGroup>
       <CropSelectionModal
-        onSubmit={(cropType, growthStage) => {
+        onSubmit={(cropType, growthStage, irrigationType, waterFlow) => {
           setSelectedCrop(cropType);  // Update crop type
           setSelectedGrowthStage(growthStage);  // Update growth stage
+          setIrrigationType(irrigationType)
+          setWaterFlow(waterFlow)
         }}
       />
       <SetFarmLocationButton />
+      <Button className='get-water-usage-button' onClick={handleFetchWaterUsage}>Get water usage</Button>
     </MapContainer>
   );
 };
