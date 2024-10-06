@@ -1,10 +1,9 @@
 // app/api/hello/route.js
-import { calculateArea, LatLng } from "./util"
-import { getPrecipitation } from "./precipitation";
-import { getWaterRequirement } from "./getWaterUsage";
-import { getET } from "./getET";
-import { getDailySchedule } from "./getDailySchedule";
-
+import { calculateArea, LatLng } from './util';
+import { getPrecipitation } from './precipitation';
+import { getWaterRequirement } from './getWaterUsage';
+import { getET } from './getET';
+import { getDailySchedule } from './getDailySchedule';
 
 const getCenter = (geometry: LatLng[]) => {
   let sumLat = 0;
@@ -16,22 +15,22 @@ const getCenter = (geometry: LatLng[]) => {
   }
 
   return { Latitude: sumLat / geometry.length, Longitude: sumLong / geometry.length };
-}
+};
 
 const addDaysToDate = (date: Date, days: number): Date => {
   const newDate = new Date(date);
   newDate.setDate(date.getDate() + days);
   return newDate;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function GET(request: any) {
   const { searchParams } = new URL(request.url);
 
-  const geometry : string = searchParams.get('geometry')!;
+  const geometry: string = searchParams.get('geometry')!;
   const flowRate: number = parseFloat(searchParams.get('flowrate')!);
-  const cropType : string = searchParams.get("croptype")!;
-  const growthStage : string = searchParams.get("growthstage")!;
+  const cropType: string = searchParams.get('croptype')!;
+  const growthStage: string = searchParams.get('growthstage')!;
 
   const today = new Date();
   const startingDate = addDaysToDate(today, -7);
@@ -46,7 +45,7 @@ export async function GET(request: any) {
   const geometryET = JSON.parse(geometry);
   const latLngArray: LatLng[] = geometryET.map(([lat, lng]: [number, number]) => ({
     Latitude: lat,
-    Longitude: lng
+    Longitude: lng,
   }));
 
   const center: LatLng = getCenter(latLngArray);
@@ -56,7 +55,7 @@ export async function GET(request: any) {
   const waterRequirements = getWaterRequirement(ET, cropType, growthStage, area, center, precipitation);
   const timeToStart = getDailySchedule(waterRequirements, flowRate);
 
-  return new Response(JSON.stringify({ waterUsage: waterRequirements, timeToEnd : timeToStart }), {
+  return new Response(JSON.stringify({ waterUsage: waterRequirements, timeToEnd: timeToStart }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });

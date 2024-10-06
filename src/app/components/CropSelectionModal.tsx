@@ -20,19 +20,20 @@ interface CropSelectionModalProps {
   onSubmit: (cropType: string, growthStage: string, irrigationType: string, waterFlow: string) => void;
 }
 
-export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps)  {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
-  const [irrigationType, setIrrigationType] = useState('')
-  const [waterFlow, setWaterFlow] = useState('')
-  const map = useMap()
+  const [irrigationType, setIrrigationType] = useState('');
+  const [waterFlow, setWaterFlow] = useState('');
+  const map = useMap();
 
-  const handleConfirm = () => {
-    if (!selectedCrop || !selectedGrowthStage) {
+  const handleConfirm = (onClose: () => void) => {
+    if (!selectedCrop || !selectedGrowthStage || !irrigationType || !waterFlow) {
       alert('Please select both crop type and growth stage.');
       return;
     }
+    onClose();
     onSubmit(selectedCrop, selectedGrowthStage, irrigationType, waterFlow);
   };
 
@@ -52,7 +53,7 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                   value={selectedCrop}
                   onChange={(e) => setSelectedCrop(e.target.value)} // Extract value from event target
                   className="select-black-font"
-                >                  
+                >
                   {CropType.map((Crop) => (
                     <SelectItem key={Crop} value={Crop} className="select-black-font">
                       {Crop.charAt(0).toUpperCase() + Crop.slice(1)}
@@ -64,36 +65,43 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                   value={selectedGrowthStage}
                   onChange={(e) => setSelectedGrowthStage(e.target.value)} // Extract value from event target
                   className="select-black-font"
-                >                  
+                >
                   {GrowthStage.map((Stage) => (
                     <SelectItem key={Stage} value={Stage} className="select-black-font">
                       {Stage}
                     </SelectItem>
                   ))}
                 </Select>
-                <Select label="Select Irrigation Type" className="select-black-font" onChange={(e) => setIrrigationType(e.target.value)}>
+                <Select
+                  label="Select Irrigation Type"
+                  className="select-black-font"
+                  onChange={(e) => setIrrigationType(e.target.value)}
+                >
                   {['Surface', 'Sprinkler', 'Drip', 'Subsurface'].map((type, index) => (
                     <SelectItem key={index + type} value={type} className="select-black-font">
                       {type}
                     </SelectItem>
                   ))}
                 </Select>
-                <Input type="text" label="Irrigation water flow in gallons / minute" onChange={(e) => setWaterFlow(e.target.value)}/>
-                <Button onClick={() => {
-  if (map) {
-    const drawControl = new L.Draw.Polygon(map as DrawMap);
-    drawControl.enable();
-  }
-                }}>
+                <Input
+                  type="text"
+                  label="Irrigation water flow in gallons / minute"
+                  onChange={(e) => setWaterFlow(e.target.value)}
+                />
+                <Button
+                  onClick={() => {
+                    if (map) {
+                      const drawControl = new L.Draw.Polygon(map as DrawMap);
+                      drawControl.enable();
+                    }
+                  }}
+                >
                   Draw crop
                 </Button>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onPress={handleConfirm}>
+                <Button color="primary" onPress={() => handleConfirm(onClose)}>
                   Confirm
-                </Button>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
                 </Button>
               </ModalFooter>
             </>
