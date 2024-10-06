@@ -81,3 +81,5 @@ export const cropData: { [key: string]: {[key: string]: number}} = {
     'watermelon': { 'Seedling': 0.4, 'Adult': 1, 'Elderly': 0.75 },
     'lettuce': { 'Seedling': 0.7, 'Adult': 1, 'Elderly': 0.95 }
 };
+
+

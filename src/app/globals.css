@@ -97,6 +97,24 @@ body {
   opacity: 0.7;
 }
 
-.interval-dropdown {
-  color: rgb(0, 0, 0); /* Change this to any color you want */
+.leaflet-croptype-button{
+  position: absolute;
+  bottom: 10px; /* Adjust distance from the bottom */
+  left: 10px;   /* Adjust distance from the left */
+  z-index: 1000; /* Ensure it appears on top */
+}
+
+.result-modal {
+  z-index: 10000;
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-control {
+  z-index: 0 !important;
+}
+
+.select-black-font {
+  color: black;  
 }

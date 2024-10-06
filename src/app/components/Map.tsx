@@ -6,6 +6,7 @@ import { EditControl } from "react-leaflet-draw"
 import DatePickerControl from './DatePickerControl'
 import GetWaterUsageButton from './GetWaterUsageButton'
 import IntervalPickerControl from './IntervalPickerControl'  
+import CropSelectionModal from './CropSelectionModal'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
 import L from 'leaflet'
@@ -72,8 +73,7 @@ const Map = () => {
         />
       </FeatureGroup>
       <GetWaterUsageButton onFetchWaterUsage={handleFetchWaterUsage}/>
-      <IntervalPickerControl />
-      <DatePickerControl onDateSelection={(updatedRange: DateRange) => setSelectedDates(updatedRange)} dateSelection={selectedDates}/>
+      <CropSelectionModal  />
     </MapContainer>
   )
 }
