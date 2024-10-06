@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
-import GetWaterUsageButton from './GetWaterUsageButton';
 import CropSelectionModal from './CropSelectionModal';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
+import SetFarmLocationButton from './SetFarmLocationButton';
 import _ from 'lodash';
-import { CropType, GrowthStage } from '../croptable';
 
 export type DateRange = [Date | null, Date | null];
 
@@ -70,15 +69,16 @@ const Map = () => {
             marker: false,
             polyline: false,
           }}
+          onDrawStop={(e) => console.log(e)}
         />
       </FeatureGroup>
-      <GetWaterUsageButton onFetchWaterUsage={handleFetchWaterUsage} />
       <CropSelectionModal
         onSubmit={(cropType, growthStage) => {
           setSelectedCrop(cropType);  // Update crop type
           setSelectedGrowthStage(growthStage);  // Update growth stage
         }}
       />
+      <SetFarmLocationButton />
     </MapContainer>
   );
 };

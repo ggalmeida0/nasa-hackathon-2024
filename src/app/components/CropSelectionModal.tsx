@@ -1,9 +1,20 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Select, SelectItem} from "@nextui-org/react";
-import { useState } from "react";
-import {CropType, GrowthStage} from "../croptable"
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Select,
+  SelectItem,
+} from '@nextui-org/react';
+import { Input } from '@nextui-org/input';
+import { CropType, GrowthStage } from '../croptable';
+import { useState } from 'react';
 
 interface CropSelectionModalProps {
-  onSubmit: (cropType: string, growthStage: string) => void;  // Use props to get the onSubmit function from parent
+  onSubmit: (cropType: string, growthStage: string) => void;
 }
 
 export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps)  {
@@ -11,38 +22,22 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
 
-  // Handle confirm action
   const handleConfirm = () => {
     if (!selectedCrop || !selectedGrowthStage) {
       alert('Please select both crop type and growth stage.');
       return;
     }
-    // Call the onSubmit function passed from the parent (Map.tsx)
     onSubmit(selectedCrop, selectedGrowthStage);
-  };
-
-  const handleCropSubmit = (cropType: string, growthStage: string) => {
-    if (!selectedCrop) {
-      alert('Please select a crop type.');
-      return;
-    }
-    if (!selectedGrowthStage) {
-      alert('Please select a growth stage.');
-      return;
-    }
-
-    console.log('Selected Crop:', selectedCrop);
-    console.log('Selected Growth Stage:', selectedGrowthStage);
-  
-    // If everything is valid, proceed to send data to backend or process it
   };
 
   return (
     <>
-      <Button onPress={onOpen} className="leaflet-croptype-button" >Crop Type</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} classNames={{ wrapper: '.result-modal' }} >
+      <Button onPress={onOpen} className="leaflet-croptype-button">
+        Crop Type
+      </Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} classNames={{ wrapper: '.result-modal' }}>
         <ModalContent>
-          {(onClose:() => void) => (
+          {(onClose: () => void) => (
             <>
               <ModalHeader className="select-black-font">Crop Info</ModalHeader>
               <ModalBody>
@@ -70,6 +65,14 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                     </SelectItem>
                   ))}
                 </Select>
+                <Select label="Select Irrigation Type" className="select-black-font">
+                  {['Surface', 'Sprinkler', 'Drip', 'Subsurface'].map((type, index) => (
+                    <SelectItem key={index + type} value={type} className="select-black-font">
+                      {type}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Input type="text" label="Irrigation water flow in gallons / minute" />
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onPress={handleConfirm}>

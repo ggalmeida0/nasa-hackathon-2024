@@ -118,3 +118,10 @@ body {
 .select-black-font {
   color: black;  
 }
+
+.leaflet-set-location-button {
+  position: absolute;
+  bottom: 10px; /* Adjust distance from the bottom */
+  left: 120px;   /* Adjust distance from the left */
+  z-index: 1; /* Ensure it appears on top */
+}
