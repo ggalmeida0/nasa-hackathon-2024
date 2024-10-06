@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, FeatureGroup } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 import CropSelectionModal from './CropSelectionModal';
+import ChatBotModal from './ChatBotModal';
+import { ChatBotModalProps } from './ChatBotModal';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
@@ -17,7 +19,7 @@ const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
   const [selectedCrop, setSelectedCrop] = useState('')
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('')
-  // const [_, setIrrigationType] = useState('')
+  const [irrigationType, setIrrigationType] = useState('')
   const [waterFlow, setWaterFlow] = useState('')
 
   useEffect(() => {
@@ -82,10 +84,11 @@ const Map = () => {
         onSubmit={(cropType, growthStage, irrigationType, waterFlow) => {
           setSelectedCrop(cropType);  // Update crop type
           setSelectedGrowthStage(growthStage);  // Update growth stage
-          // setIrrigationType(irrigationType)
+          setIrrigationType(irrigationType)
           setWaterFlow(waterFlow)
         }}
       />
+      <ChatBotModal irrigationType={irrigationType} cropType={selectedCrop} growthStage={selectedGrowthStage} waterFlow={waterFlow}  />
       <SetFarmLocationButton />
       <Button className='get-water-usage-button' onClick={handleFetchWaterUsage}>Get water usage</Button>
     </MapContainer>
