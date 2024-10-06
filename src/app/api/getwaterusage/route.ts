@@ -28,7 +28,9 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
   const geometry : string = searchParams.get('geometry')!;
-  const flowRate : number = parseFloat(searchParams.get('flowrate')!);
+  const flowRate: number = parseFloat(searchParams.get('flowrate')!);
+  const cropType : string = searchParams.get("croptype")!;
+  const growthStage : string = searchParams.get("growthstage")!;
 
   const today = new Date();
   const startingDate = addDaysToDate(today, -7);
@@ -50,8 +52,6 @@ export async function GET(request) {
   const area = calculateArea(latLngArray);
   const ET = await getET(startDateET, endDateET, latLngArray);
   const precipitation = await getPrecipitation(center, startDatePrecip, endDatePrecip);
-  const cropType = 'alfalfa';
-  const growthStage = 'Adult';
   const waterRequirements = getWaterRequirement(ET, cropType, growthStage, area, center, precipitation);
   const timeToStart = getDailySchedule(waterRequirements, flowRate);
 
