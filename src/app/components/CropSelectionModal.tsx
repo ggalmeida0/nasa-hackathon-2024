@@ -33,6 +33,10 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
       alert('Please select both crop type and growth stage.');
       return;
     }
+    if (map) {
+      const drawControl = new L.Draw.Polygon(map as DrawMap);
+      drawControl.enable();
+    }
     onClose();
     onSubmit(selectedCrop, selectedGrowthStage, irrigationType, waterFlow);
   };
@@ -88,17 +92,6 @@ export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps
                   label="Irrigation water flow in gallons / minute"
                   onChange={(e) => setWaterFlow(e.target.value)}
                 />
-                <Button
-                  onClick={() => {
-                    if (map) {
-                      const drawControl = new L.Draw.Polygon(map as DrawMap);
-                      drawControl.enable();
-                      onClose();
-                    }
-                  }}
-                >
-                  Draw crop
-                </Button>
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" onPress={() => handleConfirm(onClose)}>
