@@ -15,7 +15,7 @@ const wrapper = async (coord: LatLng, startDate: string, endDate: string): Promi
         // Fetch data from the Open-Meteo API
         const response = await fetch(`${url}?latitude=${params.latitude}&longitude=${params.longitude}&daily=${params.daily}&start_date=${params.start_date}&end_date=${params.end_date}&timezone=${params.timezone}`);
         const data = await response.json();
-
+        
         // // // Extract daily precipitation data
         const daily = data.daily;
         const daily_precipitation = daily.precipitation_sum; // Array of precipitation sums for each day

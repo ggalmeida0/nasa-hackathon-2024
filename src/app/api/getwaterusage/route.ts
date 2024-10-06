@@ -1,12 +1,10 @@
 // app/api/hello/route.js
-import { SphericalUtil, LatLng } from "./util"
+import { calculateArea, LatLng } from "./util"
 import { getPrecipitation } from "./precipitation";
 import { getWaterRequirement } from "./getWaterUsage";
 import { getET } from "./getET";
+import { getDailySchedule } from "./getDailySchedule";
 
-const getArea = (geometry: LatLng[]) => {
-  return SphericalUtil.computeSignedArea(geometry);
-};
 
 const getCenter = (geometry: LatLng[]) => {
   let sumLat = 0;
@@ -30,19 +28,15 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
   const geometry : string = searchParams.get('geometry')!;
-  // const cropType = searchParams.get('cropType');
-  // const growthStage = searchParams.get('growthStage');
+  const flowRate : number = parseFloat(searchParams.get('flowrate')!);
 
-  // // Define current date and the next 7 days
   const today = new Date();
   const startingDate = addDaysToDate(today, -7);
   const endingDate = addDaysToDate(today, 7); // Adds 7 days to today's date
 
-  // Format the dates to 'yyyy-MM-dd' as required by the API
   const startDatePrecip = today.toISOString().split('T')[0];
   const endDatePrecip = endingDate.toISOString().split('T')[0];
 
-  // Format the dates to 'yyyy-MM-dd' as required by the API
   const endDateET = addDaysToDate(today, -1).toISOString().split('T')[0];
   const startDateET = startingDate.toISOString().split('T')[0];
 
@@ -53,15 +47,16 @@ export async function GET(request) {
   }));
 
   const center: LatLng = getCenter(latLngArray);
-  const area = getArea(latLngArray);
-  const ET = await getET(startDateET, endDateET, geometryET.flat());
+  const area = calculateArea(latLngArray);
+  const ET = await getET(startDateET, endDateET, latLngArray);
   const precipitation = await getPrecipitation(center, startDatePrecip, endDatePrecip);
   const cropType = 'alfalfa';
   const growthStage = 'Adult';
+  const waterRequirements = getWaterRequirement(ET, cropType, growthStage, area, center, precipitation);
+  const timeToStart = getDailySchedule(waterRequirements, flowRate);
 
-  return new Response(JSON.stringify({ waterUsage: getWaterRequirement(ET, cropType, growthStage, area, center, precipitation) }), {
+  return new Response(JSON.stringify({ waterUsage: waterRequirements, timeToStart : timeToStart }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
 }
-

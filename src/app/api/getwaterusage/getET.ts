@@ -1,6 +1,8 @@
 import { LatLng } from "./util";
 
 const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[]): Promise<number[]> => {  
+  const reversedCoords = geometryET.map(pts => [pts.Longitude, pts.Latitude]).flat();
+
   const response = await fetch('https://openet-api.org/raster/timeseries/polygon', {
     method: 'POST',
     headers: {
@@ -14,7 +16,7 @@ const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[])
         enddate
       ],
       "file_format": "JSON",
-      "geometry": geometryET,
+      "geometry": reversedCoords,
       "interval": "daily",
       "model": "SSEBop",
       "reducer": "mean",

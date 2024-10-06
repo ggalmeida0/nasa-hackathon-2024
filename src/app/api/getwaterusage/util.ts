@@ -1,39 +1,31 @@
 export type LatLng = { Latitude: number; Longitude: number };
 
-export class SphericalUtil {
-    private static readonly EARTH_RADIUS: number = 6371009;
+const toRadians = (degrees: number): number => {
+    return degrees * (Math.PI / 180);
+}
 
-    private static toRadians(input: number): number {
-        return input / 180.0 * Math.PI;
+export const calculateArea = (latLngs: LatLng[]): number => {
+    let area = 0;
+
+    const n = latLngs.length;
+    for (let i = 0; i < n - 1; i++) {
+        const j = (i + 1) % n; // Next vertex index, wrapping around
+        const lat1 = toRadians(latLngs[i].Latitude);
+        const lat2 = toRadians(latLngs[j].Latitude);
+        const lng1 = toRadians(latLngs[i].Longitude);
+        const lng2 = toRadians(latLngs[j].Longitude);
+
+        // Using the Shoelace formula
+        area += lng1 * lat2 - lng2 * lat1;
     }
 
-    public static computeSignedArea(path: LatLng[]): number {
-        return this.computeSignedAreaWithRadius(path, this.EARTH_RADIUS);
-    }
+    area = Math.abs(area) / 2;
 
-    private static computeSignedAreaWithRadius(path: LatLng[], radius: number): number {
-        const size = path.length;
-        if (size < 3) { return 0; }
+    // Convert area from degrees^2 to square meters
+    // Earth's radius in meters (mean radius)
+    const earthRadius = 6378137; // in meters
+    const conversionFactor = Math.PI / 180; // degrees to radians conversion
+    area = area * (earthRadius ** 2) * conversionFactor ** 2; // convert to m²
 
-        let total = 0;
-        const prev = path[size - 1];
-        let prevTanLat = Math.tan((Math.PI / 2 - this.toRadians(prev.Latitude)) / 2);
-        let prevLng = this.toRadians(prev.Longitude);
-
-        for (const point of path) {
-            const tanLat = Math.tan((Math.PI / 2 - this.toRadians(point.Latitude)) / 2);
-            const lng = this.toRadians(point.Longitude);
-
-            total += this.polarTriangleArea(tanLat, lng, prevTanLat, prevLng);
-            prevTanLat = tanLat;
-            prevLng = lng;
-        }
-        return total * (radius * radius);
-    }
-
-    private static polarTriangleArea(tan1: number, lng1: number, tan2: number, lng2: number): number {
-        const deltaLng = lng1 - lng2;
-        const t = tan1 * tan2;
-        return 2 * Math.atan2(t * Math.sin(deltaLng), 1 + t * Math.cos(deltaLng));
-    }
+    return area;
 }

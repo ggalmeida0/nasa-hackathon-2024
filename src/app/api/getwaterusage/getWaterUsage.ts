@@ -1,4 +1,3 @@
-import { getPrecipitation } from "./precipitation";
 import { cropData } from "../../croptable";
 import { LatLng } from "./util";
 
