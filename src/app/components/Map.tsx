@@ -15,9 +15,9 @@ import ResultModal from './ResultModal';
 export type DateRange = [Date | null, Date | null];
 
 export type WaterUsage = {
-  waterUsage: number[]
-  timeToEnd: string[]
-}
+  waterUsage: number[];
+  timeToEnd: string[];
+};
 
 const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
@@ -26,7 +26,7 @@ const Map = () => {
   // const [_, setIrrigationType] = useState('')
   const [waterFlow, setWaterFlow] = useState('');
   const [waterUsage, setWaterUsage] = useState<WaterUsage>();
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
@@ -60,10 +60,10 @@ const Map = () => {
       growthstage: selectedGrowthStage as string,
       flowrate: waterFlow,
     };
-    setLoading(true)
+    setLoading(true);
     const result = await (await fetch('/api/getwaterusage?' + new URLSearchParams(input).toString())).json();
-    setLoading(false)
-    setWaterUsage(result)
+    setLoading(false);
+    setWaterUsage(result);
   };
 
   return (
