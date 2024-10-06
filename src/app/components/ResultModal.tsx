@@ -45,7 +45,7 @@ export default function ResultModal({ result, loading }: { result?: WaterUsage, 
     });
   });
 
-  function litersToAcreFeet(liters) {
+  function litersToAcreFeet(liters: number) {
   const conversionFactor = 8.1071319378991E-7;
   const result = liters * conversionFactor;
   return Number(result.toFixed(2));
