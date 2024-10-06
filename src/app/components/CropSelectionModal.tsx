@@ -2,11 +2,24 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDis
 import { useState } from "react";
 import {CropType, GrowthStage} from "../croptable"
 
-export default function CropSelectionModal() {
+interface CropSelectionModalProps {
+  onSubmit: (cropType: string, growthStage: string) => void;  // Use props to get the onSubmit function from parent
+}
+
+export default function CropSelectionModal({ onSubmit }: CropSelectionModalProps)  {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
 
+  // Handle confirm action
+  const handleConfirm = () => {
+    if (!selectedCrop || !selectedGrowthStage) {
+      alert('Please select both crop type and growth stage.');
+      return;
+    }
+    // Call the onSubmit function passed from the parent (Map.tsx)
+    onSubmit(selectedCrop, selectedGrowthStage);
+  };
 
   const handleCropSubmit = (cropType: string, growthStage: string) => {
     if (!selectedCrop) {
@@ -59,7 +72,7 @@ export default function CropSelectionModal() {
                 </Select>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" onPress={handleCropSubmit}>
+                <Button color="primary" onPress={handleConfirm}>
                   Confirm
                 </Button>
                 <Button color="danger" variant="light" onPress={onClose}>
