@@ -10,8 +10,14 @@ import L from 'leaflet';
 import SetFarmLocationButton from './SetFarmLocationButton';
 import { isEmpty } from 'lodash';
 import { Button } from '@nextui-org/react';
+import ResultModal from './ResultModal';
 
 export type DateRange = [Date | null, Date | null];
+
+export type WaterUsage = {
+  waterUsage: number[]
+  timeToEnd: string[]
+}
 
 const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
@@ -19,7 +25,8 @@ const Map = () => {
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
   // const [_, setIrrigationType] = useState('')
   const [waterFlow, setWaterFlow] = useState('');
-  const [waterUsage, setWaterUsage] = useState();
+  const [waterUsage, setWaterUsage] = useState<WaterUsage>();
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
@@ -40,7 +47,7 @@ const Map = () => {
   };
 
   const handleFetchWaterUsage = async () => {
-    if (isEmpty(drawingCoordinates) || !selectedCrop || !selectedGrowthStage || waterFlow) {
+    if (isEmpty(drawingCoordinates) || !selectedCrop || !selectedGrowthStage || !waterFlow) {
       alert(
         `Please fill all required fields \nSelected coodinates: ${drawingCoordinates}
         \nSelected CropType:${selectedCrop}\nSelected GrowthStage:${selectedGrowthStage}\n Water flow: ${waterFlow}`,
@@ -53,8 +60,10 @@ const Map = () => {
       growthstage: selectedGrowthStage as string,
       flowrate: waterFlow,
     };
+    setLoading(true)
     const result = await (await fetch('/api/getwaterusage?' + new URLSearchParams(input).toString())).json();
-    setWaterUsage()
+    setLoading(false)
+    setWaterUsage(result)
   };
 
   return (
@@ -87,6 +96,7 @@ const Map = () => {
         }}
       />
       <SetFarmLocationButton />
+      <ResultModal result={waterUsage} loading={loading} />
       <Button className="get-water-usage-button" onClick={handleFetchWaterUsage}>
         Get water usage
       </Button>
