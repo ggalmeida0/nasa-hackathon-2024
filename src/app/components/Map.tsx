@@ -17,11 +17,12 @@ const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
   const [selectedCrop, setSelectedCrop] = useState('')
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('')
-  const [_, setIrrigationType] = useState('')
+  // const [_, setIrrigationType] = useState('')
   const [waterFlow, setWaterFlow] = useState('')
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     delete (L.Icon.Default.prototype as any)._getIconUrl;
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: '/leaflet/marker-icon-2x.png',
@@ -30,6 +31,7 @@ const Map = () => {
     });
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCreated = (e: any) => {
     const { layer } = e;
     const coordinates = layer.toGeoJSON().geometry.coordinates as number[];
@@ -80,7 +82,7 @@ const Map = () => {
         onSubmit={(cropType, growthStage, irrigationType, waterFlow) => {
           setSelectedCrop(cropType);  // Update crop type
           setSelectedGrowthStage(growthStage);  // Update growth stage
-          setIrrigationType(irrigationType)
+          // setIrrigationType(irrigationType)
           setWaterFlow(waterFlow)
         }}
       />
