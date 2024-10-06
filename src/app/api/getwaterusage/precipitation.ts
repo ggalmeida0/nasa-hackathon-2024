@@ -1,34 +1,14 @@
 import { LatLng } from "./util"
 
-const addDaysToDate = (date: Date, days: number): Date => {
-    const newDate = new Date(date);
-    newDate.setDate(date.getDate() + days);
-    return newDate;
-}
-
-const wrapper = async (coord: LatLng): Promise<number[]>  => {
-    console.log("COORD");
-    console.log(coord);
-    
-        // // Define current date and the next 7 days
-        const today = new Date();
-        const endDate = addDaysToDate(today, 7); // Adds 7 days to today's date
-
-        // Format the dates to 'yyyy-MM-dd' as required by the API
-        const startDateStr = today.toISOString().split('T')[0];
-        const endDateStr = endDate.toISOString().split('T')[0];
-
-        console.log(startDateStr);
-        console.log(endDateStr);
-    
+const wrapper = async (coord: LatLng, startDate: string, endDate: string): Promise<number[]>  => {
         // API URL and parameters for Open-Meteo API
         const url = "https://api.open-meteo.com/v1/forecast";
         const params = {
             latitude: coord.Latitude,
             longitude: coord.Longitude, 
             daily: "precipitation_sum",
-            start_date: startDateStr,
-            end_date: endDateStr,
+            start_date: startDate,
+            end_date: endDate,
             timezone: "auto" 
         };
 
@@ -43,7 +23,7 @@ const wrapper = async (coord: LatLng): Promise<number[]>  => {
         return daily_precipitation
 } 
 
-export const getPrecipitation = async (coord: LatLng) => {
-    const value = await wrapper(coord);
+export const getPrecipitation = async (coord: LatLng, startDate: string, endDate: string) => {
+    const value = await wrapper(coord, startDate, endDate);
     return value;
 }
