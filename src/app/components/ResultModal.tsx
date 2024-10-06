@@ -44,10 +44,9 @@ export default function ResultModal({ result, loading }: { result?: WaterUsage; 
     });
   });
 
-  function litersToAcreFeet(liters: number) {
-    const conversionFactor = 8.1071319378991e-7;
-    const result = liters * conversionFactor;
-    return Number(result.toFixed(3));
+  function litersToGallons(liters: number) {
+    const conversionFactor = 0.264172; // 1 liter = 0.264172 gallons
+    return liters * conversionFactor;
   }
 
   return (
@@ -71,7 +70,7 @@ export default function ResultModal({ result, loading }: { result?: WaterUsage; 
                     </h1>
                     <h1 className="text-black">
                       We assume you will turn on the irrigation system at 10pm, below are the times you need to stop it.
-                      Water units are in acre-foot
+                      Water units are in gallons.
                     </h1>
                     <div className="flex flex-row gap-3 mb-5">
                       {result?.waterUsage.map((d, i) => (
@@ -79,7 +78,7 @@ export default function ResultModal({ result, loading }: { result?: WaterUsage; 
                           <CardHeader className="text-black ml-5">{week[i]}</CardHeader>
                           <CardBody className="p-2">
                             {renderIcon(d)}
-                            <p className="text-black">{`Water: \n${litersToAcreFeet(d)}`}</p>
+                            <p className="text-black">{`Water: \n${litersToGallons(d)}`}</p>
                             <p className="text-black">{`End time: ${result?.timeToEnd[i]}`}</p>
                           </CardBody>
                         </Card>

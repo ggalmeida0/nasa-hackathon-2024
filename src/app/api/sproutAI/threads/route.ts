@@ -1,6 +1,6 @@
-import { openai } from "../../openai";
+import { openai } from '../../openai';
 
-export const runtime = "nodejs";
+export const runtime = 'nodejs';
 
 // Create a new thread
 export async function POST() {

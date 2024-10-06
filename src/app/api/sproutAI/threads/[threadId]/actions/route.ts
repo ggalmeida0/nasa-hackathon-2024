@@ -8,7 +8,7 @@ export async function POST(request: any, { params: { threadId } }: any) {
     threadId,
     runId,
     // { tool_outputs: [{ output: result, tool_call_id: toolCallId }] },
-    { tool_outputs: toolCallOutputs }
+    { tool_outputs: toolCallOutputs },
   );
 
   return new Response(stream.toReadableStream());

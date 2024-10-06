@@ -228,7 +228,7 @@ const Chat = ({ irrigationType, cropType, growthStage, waterFlow }: ChatBotModal
         if (annotation.type === 'file_path') {
           updatedLastMessage.text = updatedLastMessage.text.replaceAll(
             annotation.text,
-            `/api/files/${annotation.file_path.file_id}`
+            `/api/files/${annotation.file_path.file_id}`,
           );
         }
       });

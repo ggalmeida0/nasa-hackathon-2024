@@ -24,7 +24,7 @@ const Map = () => {
   const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
   const [selectedCrop, setSelectedCrop] = useState('');
   const [selectedGrowthStage, setSelectedGrowthStage] = useState('');
-  const [irrigationType, setIrrigationType] = useState('')
+  const [irrigationType, setIrrigationType] = useState('');
   const [waterFlow, setWaterFlow] = useState('');
   const [waterUsage, setWaterUsage] = useState<WaterUsage>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -88,13 +88,18 @@ const Map = () => {
       </FeatureGroup>
       <CropSelectionModal
         onSubmit={(cropType, growthStage, irrigationType, waterFlow) => {
-          setSelectedCrop(cropType);  // Update crop type
-          setSelectedGrowthStage(growthStage);  // Update growth stage
-          setIrrigationType(irrigationType)
-          setWaterFlow(waterFlow)
+          setSelectedCrop(cropType); // Update crop type
+          setSelectedGrowthStage(growthStage); // Update growth stage
+          setIrrigationType(irrigationType);
+          setWaterFlow(waterFlow);
         }}
       />
-      <ChatBotModal irrigationType={irrigationType} cropType={selectedCrop} growthStage={selectedGrowthStage} waterFlow={waterFlow}  />
+      <ChatBotModal
+        irrigationType={irrigationType}
+        cropType={selectedCrop}
+        growthStage={selectedGrowthStage}
+        waterFlow={waterFlow}
+      />
       <SetFarmLocationButton />
       <ResultModal result={waterUsage} loading={loading} />
       <Button className="get-water-usage-button" onClick={handleFetchWaterUsage}>
