@@ -33,4 +33,5 @@ export const getDailySchedule = (waterUsage: number[], flowRate: number): string
     const dailyHours = waterUsage.map((dailyUsage: number) => roundToNearestQuarter(dailyUsage / flowRateLPH));
     const timeToStart = dailyHours.map((hours: number) => addTimeToStartTime(hours));
     return timeToStart;
+
 }

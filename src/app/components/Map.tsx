@@ -46,7 +46,7 @@ const Map = () => {
     const input: Record<string, string> = {
       geometry: JSON.stringify(drawingCoordinates),
       croptype: selectedCrop as string,
-      growthrate: selectedGrowthStage as string
+      growthstage: selectedGrowthStage as string
     };
     const result = await (await fetch('/api/getwaterusage?' + new URLSearchParams(input).toString())).json();
     console.log(result);
