@@ -14,7 +14,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Gaama Ramma',
+  title: 'WaterWise',
   description: 'Get your farm water usage right!',
 };
 
