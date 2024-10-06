@@ -1,10 +1,10 @@
 import { getPrecipitation } from "./precipitation";
-import { CropType, cropData } from "../../croptable";
+import { cropData } from "../../croptable";
 import { LatLng } from "./util";
 
-async function getWaterRequirement(ET: number[], cropType: CropType, growthStage: string, area: number, center: LatLng): number[] {
+export async function getWaterRequirement(ET: number[], cropType: string, growthStage: string, area: number, center: LatLng): number[] {
     // Get the crop coefficient
-    const cropKc = cropData[cropType][growthStage];
+    const cropKc : number = cropData[cropType][growthStage];
 
     // Get the precipitation data
     const precipitation = await getPrecipitation(center);

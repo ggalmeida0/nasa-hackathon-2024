@@ -1,10 +1,10 @@
-const GrowthStage = [
+export const GrowthStage = [
     'Seedling',
     'Adult',
     'Elderly'
 ]
 
-const CropType = [
+export const CropType = [
     'alfalfa',
     'onions',
     'apples',
@@ -43,40 +43,41 @@ const CropType = [
 ];
 
 
-export const cropData: { [crop: string]: CropKc } = {
-    'alfalfa': { 'kcIni': 0.4, 'kcMid': 1.2, 'kcEnd': 1.15 },
-    'onions': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'apples': { 'kcIni': 0.5, 'kcMid': 1.2, 'kcEnd': 0.85 },
-    'pasture': { 'kcIni': 0.4, 'kcMid': 1, 'kcEnd': 0.85 },
-    'apricots': { 'kcIni': 0.45, 'kcMid': 1.15, 'kcEnd': 0.85 },
-    'peaches': { 'kcIni': 0.45, 'kcMid': 1.15, 'kcEnd': 0.85 },
-    'beansGreen': { 'kcIni': 0.5, 'kcMid': 1.05, 'kcEnd': 0.9 },
-    'pears': { 'kcIni': 0.5, 'kcMid': 1.2, 'kcEnd': 0.85 },
-    'beets': { 'kcIni': 0.5, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'peas': { 'kcIni': 0.5, 'kcMid': 1.15, 'kcEnd': 1.1 },
-    'berriesBushes': { 'kcIni': 0.3, 'kcMid': 1.05, 'kcEnd': 0.5 },
-    'potato': { 'kcIni': 0.5, 'kcMid': 1.15, 'kcEnd': 0.75 },
-    'broccoli': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'pumpkin': { 'kcIni': 0.5, 'kcMid': 1, 'kcEnd': 0.8 },
-    'cabbage': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'radish': { 'kcIni': 0.7, 'kcMid': 0.9, 'kcEnd': 0.85 },
-    'cabbageLocal': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'smallVegetables': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'carrots': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'spinach': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'cauliflower': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'squash': { 'kcIni': 0.5, 'kcMid': 0.95, 'kcEnd': 0.75 },
-    'celery': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'stoneFruits': { 'kcIni': 0.45, 'kcMid': 1.15, 'kcEnd': 0.85 },
-    'cereal': { 'kcIni': 0.3, 'kcMid': 1.15, 'kcEnd': 0.25 },
-    'sweetCorn': { 'kcIni': 0.3, 'kcMid': 1.15, 'kcEnd': 0.4 },
-    'cherries': { 'kcIni': 0.5, 'kcMid': 1.2, 'kcEnd': 0.85 },
-    'sweetPeppers': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.85 },
-    'cucumber': { 'kcIni': 0.6, 'kcMid': 1, 'kcEnd': 0.75 },
-    'tomato': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.8 },
-    'grapes': { 'kcIni': 0.3, 'kcMid': 0.8, 'kcEnd': 0.5 },
-    'tubers': { 'kcIni': 0.5, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'greenOnions': { 'kcIni': 0.7, 'kcMid': 1.05, 'kcEnd': 0.95 },
-    'watermelon': { 'kcIni': 0.4, 'kcMid': 1, 'kcEnd': 0.75 },
-    'lettuce': { 'kcIni': 0.7, 'kcMid': 1, 'kcEnd': 0.95 }
+
+export const cropData: { [key: string]: {[key: string]: number}} = {
+    'alfalfa': { 'Seedling': 0.4, 'Adult': 1.2, 'Elderly': 1.15 },
+    'onions': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'apples': { 'Seedling': 0.5, 'Adult': 1.2, 'Elderly': 0.85 },
+    'pasture': { 'Seedling': 0.4, 'Adult': 1, 'Elderly': 0.85 },
+    'apricots': { 'Seedling': 0.45, 'Adult': 1.15, 'Elderly': 0.85 },
+    'peaches': { 'Seedling': 0.45, 'Adult': 1.15, 'Elderly': 0.85 },
+    'beansGreen': { 'Seedling': 0.5, 'Adult': 1.05, 'Elderly': 0.9 },
+    'pears': { 'Seedling': 0.5, 'Adult': 1.2, 'Elderly': 0.85 },
+    'beets': { 'Seedling': 0.5, 'Adult': 1.05, 'Elderly': 0.95 },
+    'peas': { 'Seedling': 0.5, 'Adult': 1.15, 'Elderly': 1.1 },
+    'berriesBushes': { 'Seedling': 0.3, 'Adult': 1.05, 'Elderly': 0.5 },
+    'potato': { 'Seedling': 0.5, 'Adult': 1.15, 'Elderly': 0.75 },
+    'broccoli': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'pumpkin': { 'Seedling': 0.5, 'Adult': 1, 'Elderly': 0.8 },
+    'cabbage': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'radish': { 'Seedling': 0.7, 'Adult': 0.9, 'Elderly': 0.85 },
+    'cabbageLocal': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'smallVegetables': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'carrots': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'spinach': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'cauliflower': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'squash': { 'Seedling': 0.5, 'Adult': 0.95, 'Elderly': 0.75 },
+    'celery': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'stoneFruits': { 'Seedling': 0.45, 'Adult': 1.15, 'Elderly': 0.85 },
+    'cereal': { 'Seedling': 0.3, 'Adult': 1.15, 'Elderly': 0.25 },
+    'sweetCorn': { 'Seedling': 0.3, 'Adult': 1.15, 'Elderly': 0.4 },
+    'cherries': { 'Seedling': 0.5, 'Adult': 1.2, 'Elderly': 0.85 },
+    'sweetPeppers': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.85 },
+    'cucumber': { 'Seedling': 0.6, 'Adult': 1, 'Elderly': 0.75 },
+    'tomato': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.8 },
+    'grapes': { 'Seedling': 0.3, 'Adult': 0.8, 'Elderly': 0.5 },
+    'tubers': { 'Seedling': 0.5, 'Adult': 1.05, 'Elderly': 0.95 },
+    'greenOnions': { 'Seedling': 0.7, 'Adult': 1.05, 'Elderly': 0.95 },
+    'watermelon': { 'Seedling': 0.4, 'Adult': 1, 'Elderly': 0.75 },
+    'lettuce': { 'Seedling': 0.7, 'Adult': 1, 'Elderly': 0.95 }
 };
