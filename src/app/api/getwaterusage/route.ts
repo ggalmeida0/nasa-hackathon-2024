@@ -55,7 +55,7 @@ export async function GET(request) {
   const waterRequirements = getWaterRequirement(ET, cropType, growthStage, area, center, precipitation);
   const timeToStart = getDailySchedule(waterRequirements, flowRate);
 
-  return new Response(JSON.stringify({ waterUsage: waterRequirements, timeToStart : timeToStart }), {
+  return new Response(JSON.stringify({ waterUsage: waterRequirements, timeToEnd : timeToStart }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' },
   });
