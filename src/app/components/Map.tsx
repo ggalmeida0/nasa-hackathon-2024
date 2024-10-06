@@ -9,12 +9,14 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import _ from 'lodash';
+import { CropType, GrowthStage } from '../croptable';
 
 export type DateRange = [Date | null, Date | null];
 
 const Map = () => {
-  const [selectedDates, setSelectedDates] = useState<DateRange>([null, null]);
-  const [drawingCoordinates, setDrawingCoordinates] = useState<string[]>([]);
+  const [drawingCoordinates, setDrawingCoordinates] = useState<number[]>([]);
+  const [selectedCrop, setSelectedCrop] = useState('')
+  const [selectedGrowthStage, setSelectedGrowthStage] = useState('')
 
   useEffect(() => {
     // This is needed to fix Leaflet icons not displaying
@@ -29,23 +31,22 @@ const Map = () => {
   const handleCreated = (e: any) => {
     const { layer } = e;
     const coordinates = layer.toGeoJSON().geometry.coordinates as number[];
-    setDrawingCoordinates(coordinates.flat().flatMap((value) => value.toString()));
+    setDrawingCoordinates(coordinates.flat());
   };
 
   const handleFetchWaterUsage = async () => {
-    if (_.isEmpty(drawingCoordinates) || _.isEmpty(selectedDates[0]) || _.isEmpty(selectedDates[1])) {
+    if (_.isEmpty(drawingCoordinates) || !selectedCrop || !selectedGrowthStage) {
       console.log(_.isEmpty(drawingCoordinates));
       alert(
-        `Please select the date range, and draw the coordinates. \nSelected coodinates: ${drawingCoordinates}\nSelected Dates: ${selectedDates}`,
+        `Please fill all required fields \nSelected coodinates: ${drawingCoordinates}
+        \nSelected CropType:${selectedCrop}\nSelected GrowthStage:${selectedGrowthStage}`,
       );
       return;
     }
-    const [startDate, endDate] = selectedDates.map((date) => date?.toISOString().split('T')[0]);
     const input: Record<string, string> = {
-      geometry: drawingCoordinates.join(','),
-      startdate: startDate as string,
-      enddate: endDate as string,
-      interval: 'daily',
+      geometry: JSON.stringify(drawingCoordinates),
+      croptype: selectedCrop as string,
+      growthrate: selectedGrowthStage as string
     };
     const result = await (await fetch('/api/getwaterusage?' + new URLSearchParams(input).toString())).json();
     console.log(result);
@@ -72,7 +73,12 @@ const Map = () => {
         />
       </FeatureGroup>
       <GetWaterUsageButton onFetchWaterUsage={handleFetchWaterUsage} />
-      <CropSelectionModal />
+      <CropSelectionModal
+        onSubmit={(cropType, growthStage) => {
+          setSelectedCrop(cropType);  // Update crop type
+          setSelectedGrowthStage(growthStage);  // Update growth stage
+        }}
+      />
     </MapContainer>
   );
 };
