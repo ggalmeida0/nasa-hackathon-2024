@@ -1,8 +1,6 @@
 import { LatLng } from "./util";
 
-const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[]): Promise<number[]> => {
-  console.log(startdate, enddate, geometryET)
-  
+const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[]): Promise<number[]> => {  
   const response = await fetch('https://openet-api.org/raster/timeseries/polygon', {
     method: 'POST',
     headers: {
@@ -16,16 +14,7 @@ const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[])
         enddate
       ],
       "file_format": "JSON",
-      "geometry":  [
-        -119.7937,
-        35.58995,
-        -119.7937,
-        35.53326,
-        -119.71268,
-        35.53326,
-        -119.71268,
-        35.58995
-      ],
+      "geometry": geometryET,
       "interval": "daily",
       "model": "SSEBop",
       "reducer": "mean",
@@ -35,7 +24,7 @@ const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[])
     }),
   });
   const data = await response.json();
-  console.log(data)
+
   // Convert to an array of et numbers
   const etArray = data.map((entry: { et: any; }) => entry.et);
 
