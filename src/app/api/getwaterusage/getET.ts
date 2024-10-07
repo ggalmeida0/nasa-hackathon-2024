@@ -7,7 +7,7 @@ const wrapper = async (startdate: string, enddate: string, geometryET: LatLng[])
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pegB8xzf2qLW1l8L5lq8kqUow4GN4ujvMOtGKPZ2jLkWgk8KIpNfTzlLt8mP',
+      Authorization: process.env.ET_API_KEY as string,
     },
 
     body: JSON.stringify({
