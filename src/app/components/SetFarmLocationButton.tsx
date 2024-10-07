@@ -28,7 +28,7 @@ export default function SetFarmLocationButton() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="select-black-font">Crop Info</ModalHeader>
+              <ModalHeader className="select-black-font">Set Farm Location</ModalHeader>
               <ModalBody>
                 <Input
                   type="text"
